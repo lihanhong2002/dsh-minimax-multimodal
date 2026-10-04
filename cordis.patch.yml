@@ -1,0 +1,11 @@
+- insert:
+    - id: minimax-multimodal
+      name: dsh-minimax-multimodal
+      config:
+        region: cn
+        credentialRef: MINIMAX_CN_API_KEY
+        visionModel: MiniMax-M3
+        imageModel: image-01
+        speechModel: speech-2.8-turbo
+        transcriptionModel: asr-1.0
+        defaultVoice: male-qn-qingse

@@ -1,0 +1,17 @@
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+credentials.json
+.credentials.yaml
+verification/
+tools/
+*.log
+npm-debug.log*
+node_modules/
+coverage/
+dist/
+*.tgz
