@@ -1,0 +1,6 @@
+{
+  "meta": {
+    "title": "MiniMax Multimodal",
+    "description": "MiniMax image understanding, image generation, speech synthesis and transcription, with a model picker under the chat input."
+  }
+}

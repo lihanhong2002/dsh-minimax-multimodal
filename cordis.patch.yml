@@ -4,8 +4,10 @@
       config:
         region: cn
         credentialRef: MINIMAX_CN_API_KEY
-        visionModel: MiniMax-M3
-        imageModel: image-01
+        visionModel: follow-session
+        imageModel: image-01-live
         speechModel: speech-2.8-turbo
         transcriptionModel: asr-1.0
         defaultVoice: male-qn-qingse
+        searchCredentialRef: MINIMAX_SEARCH_API_KEY
+        searchHost: ''

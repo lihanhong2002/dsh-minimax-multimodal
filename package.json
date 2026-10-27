@@ -1,12 +1,35 @@
 {
   "name": "dsh-minimax-multimodal",
-  "version": "0.1.1",
+  "version": "0.3.0",
   "type": "module",
   "main": "./index.mjs",
-  "description": "MiniMax image understanding, image generation, speech synthesis and transcription for DeepSeek Harness",
+  "exports": {
+    ".": "./index.mjs",
+    "./client": "./lib/client.js",
+    "./locale/*.json": "./locale/*.json"
+  },
+  "description": "MiniMax web search, image understanding, image generation, speech synthesis and transcription for DeepSeek Harness",
   "license": "MIT",
-  "engines": { "node": ">=22" },
-  "files": ["index.mjs", "lib", "cordis.patch.yml", "README.md", "LICENSE"],
-  "scripts": { "test": "node --test tests/*.test.mjs" },
-  "dsh": { "bundle": { "patch": "./cordis.patch.yml" } }
+  "author": { "name": "lihanhong2002", "email": "111064923+lihanhong2002@users.noreply.github.com" },
+  "repository": { "type": "git", "url": "git+https://github.com/lihanhong2002/dsh-minimax-multimodal.git" },
+  "homepage": "https://github.com/lihanhong2002/dsh-minimax-multimodal#readme",
+  "keywords": ["deepseek-harness", "dsh", "dsh-plugin", "minimax", "multimodal", "plugin"],
+  "engines": { "node": ">=22.8" },
+  "files": ["index.mjs", "lib", "cordis.patch.yml", "README.md", "LICENSE", "locale"],
+  "scripts": { "test": "node --test --test-isolation=none tests/*.test.mjs" },
+  "dsh": {
+    "bundle": { "patch": "./cordis.patch.yml" },
+    "client": {
+      "platform": "web",
+      "immediately": true,
+      "inject": [
+        "@deepseek-ai/dsh-api-remotes",
+        "@deepseek-ai/dsh-api-session-controller",
+        "@deepseek-ai/dsh-client-ui-chat",
+        "@deepseek-ai/dsh-client-ui-conversation",
+        "@deepseek-ai/dsh-client-ui-renderer",
+        "@deepseek-ai/dsh-client-ui-session"
+      ]
+    }
+  }
 }
