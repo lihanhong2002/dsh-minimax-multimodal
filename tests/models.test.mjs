@@ -110,3 +110,28 @@ test('the client bundle registers the model picker under the composer',async()=>
   assert.equal(typeof props.apply,'function');
   for(const entry of MODEL_CATALOG){assert.ok(source.includes("'"+entry.id+"'"));assert.ok(source.includes(entry.description));}
 });
+
+
+test('model settings render each current model without crashing',async()=>{
+  const source=await readFile(new URL('../lib/client.js',import.meta.url),'utf8');
+  let captured, component;
+  new Function('window',source)({__ModuleLoader__:{load:row=>{captured=row;}}});
+  const values=[{vision:'follow-session',image:'image-01-live',speech:'speech-2.8-turbo',transcription:'asr-1.0'},0,'',false,true];
+  const react={Fragment:'fragment',createElement:(type,props,...children)=>({type,props:props||{},children}),useState:()=>[values.shift(),()=>{}],useEffect:()=>{}};
+  const module=captured.factory(()=>react);
+  module.apply({slots:{inject:(_name,fn)=>fn(),register:(_definition,view)=>{component=view;}},remote:{commands:{}}});
+  const tree=component({sessionId:'s'});
+  assert.equal(tree.type,'fragment');
+  assert.equal(tree.children[0].type,'button');
+  const overlay=tree.children[1];
+  assert.equal(overlay.props.style.position,'fixed');
+  const panel=overlay.children[0];
+  assert.equal(panel.props.role,'dialog');
+  const pickers=panel.children[3].children[0];
+  assert.equal(pickers.length,4);
+  for(const picker of pickers) {
+    const rendered=picker.type(picker.props);
+    assert.equal(rendered.type,'label');
+    assert.equal(rendered.children[1].type,'select');
+  }
+});

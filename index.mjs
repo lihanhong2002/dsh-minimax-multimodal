@@ -18,7 +18,15 @@ export async function resolveKey(ctx,config,env=process.env) {
   return '';
 }
 export async function resolveSearchKey(ctx,config,env=process.env) {
-  return resolveKey(ctx,{...config,credentialRef:config.searchCredentialRef||config.credentialRef},env);
+  if(config.searchCredentialRef) {
+    try {
+      const hit=await ctx.get('credentials')?.resolve(config.searchCredentialRef);
+      if(typeof hit?.value==='string'&&hit.value.trim())return hit.value;
+    } catch {}
+    const key=env[config.searchCredentialRef];
+    if(typeof key==='string'&&key.trim())return key;
+  }
+  return resolveKey(ctx,config,env);
 }
 /**
  * 读取用户当前会话使用的模型，映射成 MiniMax 平台的识图模型 id。

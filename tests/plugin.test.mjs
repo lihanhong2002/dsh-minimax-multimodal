@@ -70,6 +70,7 @@ test('search credentials prefer the dedicated M Plan reference and fall back to 
   assert.deepEqual(refs,['MINIMAX_SEARCH_API_KEY','MINIMAX_CN_API_KEY']);
   assert.equal(await resolveSearchKey({get:()=>({resolve:async()=>({value:'plan-key'})})},{region:'cn',searchCredentialRef:'MY_PLAN'}),'plan-key');
   assert.equal(await resolveSearchKey({get:()=>undefined},{region:'global'},{MINIMAX_API_KEY:'global-key'}),'global-key');
+  assert.equal(await resolveSearchKey({get:()=>undefined},{region:'cn',credentialRef:'CUSTOM_MAIN',searchCredentialRef:'CUSTOM_SEARCH'},{CUSTOM_MAIN:'custom-key',MINIMAX_CN_API_KEY:'default-key'}),'custom-key');
 });
 test('web search targets the MiniMax search route, formats hits and fails safely',async()=>{
   const seen=[];

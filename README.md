@@ -23,7 +23,7 @@
 
 模型可以在三个地方改，三者共用同一份状态：
 
-1. **输入框下方的下拉列表**（DSH 桌面端 Web 界面）：每个能力一个下拉框，选项带一句话简介，选择后立即生效。
+1. **输入框下方的“⚙ MiniMax”按钮**（DSH 桌面端 Web 界面）：点击打开模型设置窗口，分别选择识图、生图、语音和转写模型，选择后立即生效。
 2. **斜杠命令**：`/minimax-model` 查看当前选择，`/minimax-model vision=follow-session image=image-01-live` 切换。
 3. **配置补丁** `cordis.patch.yml`：设置各项默认值。
 
@@ -86,6 +86,20 @@ dsh plugin --profile desktop add 'link:<插件目录的绝对路径>'
 - “用 MiniMax 把 `recording.mp3` 转成文字。”
 
 识图和转写工具读取会话工作区中已有文件，遵守 DSH 文件系统权限。识图文件上限 10 MiB；音频上限 50 MiB，ASR 最长 500 秒；语音合成每次最多 3000 个字符；搜索关键词最长 500 字符，默认保留 5 条结果，最多 10 条。API 权限和可用模型由 MiniMax 账户决定。
+
+## 项目结构
+
+```text
+index.mjs             插件入口、工具与命令注册
+lib/api.mjs           MiniMax API 请求和响应处理
+lib/client.js         DSH 客户端模型设置界面
+lib/models.mjs        模型目录与选择解析
+lib/selection.mjs     模型选择状态
+lib/presentation.mjs  图片和语音文件交付
+locale/               界面语言文件
+tests/                插件和模型选择测试
+cordis.patch.yml      DSH 插件默认配置
+```
 
 ## 开发
 
